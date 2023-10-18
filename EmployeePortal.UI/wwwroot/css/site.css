@@ -4,7 +4,7 @@ html {
 
 @media (min-width: 768px) {
   html {
-    font-size: 16px;
+    font-size: 15px;
   }
 }
 
@@ -27,6 +27,15 @@ body {
     margin: 0 auto;
 }
 
+.register-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.register-form {
+    max-width: 300px;
+    margin: 0 auto;
+}
 .form-label {
     font-weight: bold;
 }
@@ -42,14 +51,29 @@ body {
 .login-button {
     background-color: #007bff;
     color: #fff;
-    padding: 10px 20px;
+    padding: 10px 100px ;
     border: none;
     border-radius: 5px;
 }
 
-    .login-button:hover {
+.login-button:hover {
+    background-color: #0056b3;
+}
+.register-button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 100px;
+    border: none;
+    border-radius: 5px;
+}
+
+    .register-button:hover {
         background-color: #0056b3;
     }
+.logoimg {
+    width:220px ;
+    height:56px;
+}
 
 /* Reset some default styling */
 body, h1, h2, h3, p, ul, li {
@@ -101,15 +125,16 @@ nav a {
     transition: color 0.3s;
 }
 
-    nav a:hover {
-        color: #0056b3;
-    }
+nav a:hover {
+    color: #0056b3;
+}
 
 main {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    padding: 20px 0;
+/*    padding: 20px 0;
+*/
 }
 
 .card {
@@ -122,14 +147,14 @@ main {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
-    .card h2 {
-        font-size: 18px;
-        margin-bottom: 10px;
-    }
+.card h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
 
-    .card p {
-        font-size: 16px;
-    }
+.card p {
+    font-size: 16px;
+}
 
 aside {
     flex: 1;
@@ -143,19 +168,19 @@ aside {
     padding: 20px;
 }
 
-    .widget h3 {
-        font-size: 18px;
-        margin-bottom: 10px;
-    }
+.widget h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
 
-    .widget ul {
-        list-style: none;
-        padding: 0;
-    }
+.widget ul {
+    list-style: none;
+    padding: 0;
+}
 
-    .widget li {
-        margin: 10px 0;
-    }
+.widget li {
+    margin: 10px 0;
+}
 
 footer {
     text-align: center;

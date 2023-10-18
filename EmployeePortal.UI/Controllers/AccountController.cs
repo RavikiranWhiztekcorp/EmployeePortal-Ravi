@@ -13,7 +13,7 @@ namespace EmployeePortal.UI.Controllers
             this._apiService = apiService;
         }
 
-            [HttpGet]
+        [HttpGet]
         public IActionResult Login()
         {
             return View();
@@ -46,7 +46,38 @@ namespace EmployeePortal.UI.Controllers
             ModelState.AddModelError(string.Empty, "Invalid login attempt");
             return View(model);
         }
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RegisterAsync(RegisterViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                User user = new User();
+                user.Username = model.Username;
+                user.Password = model.Password;
 
+                // Make a POST request to the Web API
+                //var response = await _apiService.PostAsync("api/Account/login", user);
+                if (model!=null)
+                {
+                    // Handle a successful Register
+                    return RedirectToAction("Login");
+                }
+                else
+                {
+                    // Handle the case where the API request fails or register is unsuccessful
+                    ModelState.AddModelError(string.Empty, "API request failed or register was unsuccessful");
+                }
+            }
+
+            ModelState.AddModelError(string.Empty, "Invalid register attempt");
+            return View(model);
+        }
         [HttpGet]
         public IActionResult Welcome()
         {

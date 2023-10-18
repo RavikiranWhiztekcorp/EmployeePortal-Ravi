@@ -1,0 +1,89 @@
+﻿@model RegisterViewModel
+
+@{
+    ViewData["Title"] = "Register";
+}@* 
+<div class="text-center">
+    <h2 class="register-title">@ViewData["Title"]</h2>
+    <form asp-action="Register" method="post" class="register-form">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Username" class="form-label">Username</label>
+            <input asp-for="Username" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Email" class="form-label">Email</label>
+            <input asp-for="Email" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Password" class="form-label">Password</label>
+            <input asp-for="Password" type="password" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="ConfirmPassword" class="form-label">ConfirmPassword</label>
+            <input asp-for="ConfirmPassword" type="password" class="form-control" />
+        </div>
+        <button type="submit" class="btn btn-primary login-button">Register</button>
+        <p><a asp-area="" asp-controller="Account" asp-action="Login">Already have an account?</a></p>
+    </form>
+</div> *@
+
+
+<div class="container">
+    <div class="row">
+        <div class="ml-offset col-lg-5 col-md-6 offeset-lg-4 offset-md-1">
+            <div class="panel border bg-white">
+                <div class="panel-heading">
+                    <h2 class="pt-3 font-weight-bold login-title">@ViewData["Title"]</h2>
+                </div>
+                <form asp-action="Register" method="post" class="login-form">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <div class="input-feild">
+                            <div class="text-center">
+                                <span class="fa fa-user"></span>
+                                <label asp-for="Username" class="form-label">Username</label>
+                                <b><span class="text-danger">*</span></b>
+                                <input asp-for="Username" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-feild">
+                            <div class="text-center">
+                                <span class="fa fa-envelope"></span>
+                                <label asp-for="Email" class="form-label">Email</label>
+                                <b><span class="text-danger">*</span></b>
+                                <input asp-for="Email" type="email" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-feild">
+                            <div class="text-center">
+                                <span class="fa fa-lock"></span>
+                                <label asp-for="Password" class="form-label">Password</label>
+                                <b><span class="text-danger">*</span></b>
+                                <input asp-for="Password" type="password" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-feild">
+                            <div class="text-center">
+                                <span class="fa fa-lock"></span>
+                                <label asp-for="ConfirmPassword" class="form-label">ConfirmPassword</label>
+                                <b><span class="text-danger">*</span></b>
+                                <input asp-for="ConfirmPassword" type="password" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="registerbtn">
+                        <button type="submit" class="btn btn-primary register-button">Register</button>
+                    </div>
+                    <div class="text-center py-1 text-muted">Don't have an Account?<a asp-area="" asp-controller="Account" asp-action="Login">Already have an account?</a></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
