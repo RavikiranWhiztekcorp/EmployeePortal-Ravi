@@ -28,7 +28,7 @@ namespace EmployeePortal.UI.Controllers
                 User user = new User();
                 user.Username = model.Username;
                 user.Password= model.Password;
-                
+
                 // Make a POST request to the Web API
                 var response = await _apiService.PostAsync("api/Account/login", user);
                 if (!string.IsNullOrEmpty(response) && response == "Login Successfull")
@@ -39,10 +39,10 @@ namespace EmployeePortal.UI.Controllers
                 else
                 {
                     // Handle the case where the API request fails or login is unsuccessful
+                    ModelState.AddModelError(string.Empty, response);
                     ModelState.AddModelError(string.Empty, "API request failed or login was unsuccessful");
                 }
             }
-
             ModelState.AddModelError(string.Empty, "Invalid login attempt");
             return View(model);
         }
@@ -60,17 +60,27 @@ namespace EmployeePortal.UI.Controllers
                 User user = new User();
                 user.Username = model.Username;
                 user.Password = model.Password;
+                user.Email= model.Email;
+                user.Role = "User";
+                user.CreatedDate = DateTime.Now;
+                user.UpdatedDate = DateTime.Now;
 
                 // Make a POST request to the Web API
-                //var response = await _apiService.PostAsync("api/Account/login", user);
-                if (model!=null)
+                var response = await _apiService.PostAsync("api/Account/register", user);
+
+                if (!string.IsNullOrEmpty(response) && response == "Register Successfull")
                 {
                     // Handle a successful Register
                     return RedirectToAction("Login");
                 }
                 else
                 {
+
                     // Handle the case where the API request fails or register is unsuccessful
+                    if (response!=null)
+                    {
+                        ModelState.AddModelError(string.Empty, response);
+                    }
                     ModelState.AddModelError(string.Empty, "API request failed or register was unsuccessful");
                 }
             }

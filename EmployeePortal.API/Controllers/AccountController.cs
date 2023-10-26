@@ -10,19 +10,65 @@ namespace EmployeePortal.API.Controllers
     public class AccountController : ControllerBase
     {
         //implement DI
-        private readonly AccountBALRepo _accountBALRepo = new AccountBALRepo();
+        private readonly AccountBALRepo _accountBALRepo;
 
         public AccountController()
         {
-            //_accountBALRepo = accountBALRepo;
+            _accountBALRepo = new AccountBALRepo();
         }
+        //[HttpPost("login")]
+        //public IActionResult Login([FromBody] User user)
+        //{
+        //    if (_accountBALRepo.ValidateUserCredentials(user.Username, user.Password))
+        //    {
+        //        return Ok("Login Successfull");
+        //    }
+        //    else
+        //    {
+        //        return Unauthorized("Invalid credentials");
+        //    }
+        //}
 
-        [HttpPost("login")]
-        public IActionResult Login([FromBody] User user)
+        [HttpGet("getallusers")]
+        public async Task<IEnumerable<User>> GetAllUsers()
         {
-            if (_accountBALRepo.ValidateUserCredentials(user.Username, user.Password))
+            return await _accountBALRepo.GetAllAsync();
+        }
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] User user)
+        {
+            if (user != null)
             {
-                return Ok("Login Successfull");
+                var data = await _accountBALRepo.Create(user);
+                if (data)
+                {
+                    return Ok("Register Successfull");
+                }
+                else
+                {
+                    return Ok("Make sure the credentials are correct");
+                }
+
+            }
+            else
+            {
+                return Unauthorized("Invalid credentials");
+            }
+        }
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(User user)
+        {
+            if (user != null)
+            {
+                var data =await _accountBALRepo.UserValidateUserCredentials(user);
+                if (data)
+                {
+                    return Ok("Login Successfull");
+                }
+                else
+                {
+                    return Ok("Make sure the credentials are correct");
+                }
             }
             else
             {

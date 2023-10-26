@@ -5,14 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EmployeePortal.BAL.Interfaces
+namespace EmployeePortal.DAL.Interfaces
 {
-    public interface IAccountBALRepo
+    public interface IAccountDALRepo
     {
         bool ValidateUserCredentials(string username, string password);
         Task<IEnumerable<User>> GetAllAsync();
-        Task<bool> Create(User _user);
         Task<bool> UserValidateUserCredentials(User user);
-
+        Task<User> GetByUserNameAsync(string username,string password);
+        Task<bool> Create(User _user);
     }
 }
