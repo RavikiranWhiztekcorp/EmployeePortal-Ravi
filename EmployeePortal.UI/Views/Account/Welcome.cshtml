@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿
+@{
+    ViewData["Title"] = "Welcome";
+}
+<!DOCTYPE html>
 <html>
 <head>
     <title>Employee Portal Dashboard</title>
@@ -7,12 +11,12 @@
 <body>
     <div class="container-fluid mt-2">
         <header>
-            <h1>Welcome, [Employee Name]</h1>
+            <h1>Welcome, @ViewBag.Username</h1>
         </header>
         <nav>
             <ul>
                 <li><a href="#">Profile</a></li>
-                <li><a href="#">My Tasks</a></li>
+                <li><a href="/Account/MyTask">My Tasks</a></li>
                 <li><a href="#">Messages</a></li>
                 <li><a href="#">Calendar</a></li>
             </ul>

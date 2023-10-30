@@ -8,7 +8,7 @@ namespace EmployeePortal.UI.Controllers
     public class AccountController : Controller
     {
         private ApiService _apiService;
-       public AccountController(ApiService apiService)
+        public AccountController(ApiService apiService)
         {
             this._apiService = apiService;
         }
@@ -27,13 +27,14 @@ namespace EmployeePortal.UI.Controllers
             {
                 User user = new User();
                 user.Username = model.Username;
-                user.Password= model.Password;
+                user.Password = model.Password;
 
                 // Make a POST request to the Web API
                 var response = await _apiService.PostAsync("api/Account/login", user);
                 if (!string.IsNullOrEmpty(response) && response == "Login Successfull")
                 {
                     // Handle a successful login
+                    ViewBag.Username = model.Username.ToString();
                     return RedirectToAction("Welcome");
                 }
                 else
@@ -60,7 +61,7 @@ namespace EmployeePortal.UI.Controllers
                 User user = new User();
                 user.Username = model.Username;
                 user.Password = model.Password;
-                user.Email= model.Email;
+                user.Email = model.Email;
                 user.Role = "User";
                 user.CreatedDate = DateTime.Now;
                 user.UpdatedDate = DateTime.Now;
@@ -77,7 +78,7 @@ namespace EmployeePortal.UI.Controllers
                 {
 
                     // Handle the case where the API request fails or register is unsuccessful
-                    if (response!=null)
+                    if (response != null)
                     {
                         ModelState.AddModelError(string.Empty, response);
                     }
@@ -93,6 +94,41 @@ namespace EmployeePortal.UI.Controllers
         {
             return View();
         }
-    }
+        [HttpGet]
+        public IActionResult MyTask()
+        {
 
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> MyTaskAsync(TaskViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                // Make a POST request to the Web API
+                var response = await _apiService.PostAsync("api/Account/mytask", model);
+
+                if (!string.IsNullOrEmpty(response) && response == "Successfull")
+                {
+                    // Handle a successful Register
+                    return RedirectToAction("MyTask");
+                }
+                else
+                {
+
+                    // Handle the case where the API request fails or register is unsuccessful
+                    if (response != null)
+                    {
+                        ModelState.AddModelError(string.Empty, response);
+                    }
+                    ModelState.AddModelError(string.Empty, "API request failed or register was unsuccessful");
+                }
+            }
+
+            ModelState.AddModelError(string.Empty, "Invalid register attempt");
+            return View(model);
+        }
+
+    }
 }
