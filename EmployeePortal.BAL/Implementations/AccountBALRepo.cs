@@ -11,33 +11,35 @@ namespace EmployeePortal.BAL.Implementations
 {
     public class AccountBALRepo : IAccountBALRepo
     {
-        //implement DI
-        private AccountDALRepo _accountDALRepo = new AccountDALRepo();
-        public Task<bool> Create(User _user)
+        private AccountDALRepo _accountDALRepo;
+        public AccountBALRepo()
         {
-            return _accountDALRepo.Create(_user);
+            _accountDALRepo = new AccountDALRepo();
         }
-        public Task<bool> Update(User _user)
+        public async Task<IEnumerable<User>> GetAllAsync()
         {
-            return _accountDALRepo.Update(_user);
+            return await _accountDALRepo.GetAllAsync();
         }
-
-        public Task<IEnumerable<User>> GetAllAsync()
+        public async Task<User> GetByIdAsync(User user)
         {
-            return _accountDALRepo.GetAllAsync();
+            return await _accountDALRepo.GetByIdAsync(user);
         }
-        public Task<User> GetByIdAsync(User user)
+        public async Task<bool> Create(User _user)
         {
-            return _accountDALRepo.GetByIdAsync(user);
+            return await _accountDALRepo.Create(_user);
         }
-        public Task<bool> Delete(User _user)
+        public async Task<bool> Update(User _user)
         {
-            return _accountDALRepo.Delete(_user);
+            return await _accountDALRepo.Update(_user);
         }
-        public bool ValidateUserCredentials(string username, string password)
+        public async Task<bool> Delete(User _user)
         {
-            return _accountDALRepo.ValidateUserCredentials(username, password);
+            return await _accountDALRepo.Delete(_user);
         }
+        //public bool ValidateUserCredentials(string username, string password)
+        //{
+        //    return _accountDALRepo.ValidateUserCredentials(username, password);
+        //}
         public async Task<bool> UserValidateUserCredentials(User user)
         {
             return await _accountDALRepo.UserValidateUserCredentials(user);

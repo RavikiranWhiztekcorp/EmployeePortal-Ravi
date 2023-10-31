@@ -17,26 +17,11 @@ namespace EmployeePortal.DAL.Implementations
 {
     public class AccountDALRepo:IAccountDALRepo
     {
-        private string constring = "Server=LAPTOP-46NPMGS0\\SQLEXPRESS;Database=ATSDB;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=true";
-        private SqlConnection con;
-        DapperServices<User> userRepository = new DapperServices<User>();
-
-        public AccountDALRepo(){
-            con = new SqlConnection(constring);
-        }
-
-        private List<User> users = new List<User>
+        DapperServices<User> _userRepository;
+        public AccountDALRepo()
         {
-        new User { Username = "user1", Password = "password1" },
-        new User { Username = "user2", Password = "password2" }
-        };
-
-        public bool ValidateUserCredentials(string username, string password)
-        {
-            var user = users.FirstOrDefault(u => u.Username == username && u.Password == password);
-            return user != null;
+            _userRepository = new DapperServices<User>();
         }
-       
         public async Task<IEnumerable<User>> GetAllAsync()
         {
             #region sql query
@@ -52,29 +37,12 @@ namespace EmployeePortal.DAL.Implementations
             //var result = await dapperService.ReadAllAsync();
             //return result;
             #endregion
-
-            var result = await userRepository.ReadAllAsync(new User());
+            var result = await _userRepository.ReadAllAsync(new User());
             return result;
         }
         public async Task<User> GetByIdAsync(User user)
         {
-             return await userRepository.ReadGetByIdAsync(user);
-        }
-        public async Task<bool> UserValidateUserCredentials(User user)
-        {
-            var data = await GetByUserNameAsync(user.Username,user.Password);
-            return data != null;
-        }
-        public async Task<User> GetByUserNameAsync(string username,string password)
-        {
-
-            #region sql qerey
-            var query = "SELECT * FROM Account_tbl WHERE Username = @Username AND Password=@password";
-            {
-                var result = await con.QuerySingleOrDefaultAsync<User>(query, new { username, password });
-                return result;
-            }
-            #endregion
+             return await _userRepository.ReadGetByIdAsync(user);
         }
         public async Task<bool> Create(User _user)
         {
@@ -97,7 +65,7 @@ namespace EmployeePortal.DAL.Implementations
 
             if (_user!=null)
             {
-                await userRepository.CreateAsync(_user);
+                await _userRepository.CreateAsync(_user);
                 return true;
             }
             return false;
@@ -107,7 +75,7 @@ namespace EmployeePortal.DAL.Implementations
         {
             if (_user != null)
             {
-                await userRepository.UpdateAsync(_user);
+                await _userRepository.UpdateAsync(_user);
                 return true;
             }
             return false;
@@ -116,10 +84,33 @@ namespace EmployeePortal.DAL.Implementations
         {
             if (_user != null)
             {
-                await userRepository.DeleteAsync(_user);
+                await _userRepository.DeleteAsync(_user);
                 return true;
             }
             return false;
         }
+        public async Task<User> GetByUserNameAsync(string username, string password)
+        {
+            var user= await _userRepository.ReadGetByIdAsync(new User() { Username = username, Password = password });
+            return user;
+            #region sql qurey
+            var con = new SqlConnection("Server=LAPTOP-46NPMGS0\\SQLEXPRESS;Database=ATSDB;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=true");
+            var query = "SELECT * FROM Account_tbl WHERE Username = @Username AND Password=@password";
+            {
+                var result = await con.QuerySingleOrDefaultAsync<User>(query, new { username, password });
+                return result;
+            }
+            #endregion
+        }
+        public async Task<bool> UserValidateUserCredentials(User user)
+        {
+            var data = await GetByUserNameAsync(user.Username, user.Password);
+            return data != null;
+        }
+        //public bool ValidateUserCredentials(string username, string password)
+        //{
+        //    var user = users.FirstOrDefault(u => u.Username == username && u.Password == password);
+        //    return user != null;
+        //}
     }
 }

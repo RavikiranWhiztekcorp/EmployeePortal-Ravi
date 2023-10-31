@@ -9,42 +9,27 @@ namespace EmployeePortal.API.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        //implement DI
         private readonly AccountBALRepo _accountBALRepo;
-
         public AccountController()
         {
             _accountBALRepo = new AccountBALRepo();
         }
-        //[HttpPost("login")]
-        //public IActionResult Login([FromBody] User user)
-        //{
-        //    if (_accountBALRepo.ValidateUserCredentials(user.Username, user.Password))
-        //    {
-        //        return Ok("Login Successfull");
-        //    }
-        //    else
-        //    {
-        //        return Unauthorized("Invalid credentials");
-        //    }
-        //}
-
         [HttpGet("getallUsers")]
         public async Task<IEnumerable<User>> GetAllUsers()
         {
             return await _accountBALRepo.GetAllAsync();
         }
         [HttpPost("getbyidUser")]
-        public async Task<User> GetByIdUser(User user)
+        public async Task<User> GetByIdUser(User _user)
         {
-            return await _accountBALRepo.GetByIdAsync(user);
+            return await _accountBALRepo.GetByIdAsync(_user);
         }
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] User user)
+        public async Task<IActionResult> RegisterUser([FromBody] User _user)
         {
-            if (user != null)
+            if (_user != null)
             {
-                var data = await _accountBALRepo.Create(user);
+                var data = await _accountBALRepo.Create(_user);
                 if (data)
                 {
                     return Ok("Register Successfull");
@@ -60,28 +45,8 @@ namespace EmployeePortal.API.Controllers
                 return Unauthorized("Invalid credentials");
             }
         }
-        [HttpPost("login")]
-        public async Task<IActionResult> Login(User user)
-        {
-            if (user != null)
-            {
-                var data =await _accountBALRepo.UserValidateUserCredentials(user);
-                if (data)
-                {
-                    return Ok("Login Successfull");
-                }
-                else
-                {
-                    return Ok("Make sure the credentials are correct");
-                }
-            }
-            else
-            {
-                return Unauthorized("Invalid credentials");
-            }
-        }
         [HttpPut("updateUser")]
-        public async Task<IActionResult> Update(User _user)
+        public async Task<IActionResult> UpdateUser(User _user)
         {
             if (_user != null)
             {
@@ -102,7 +67,7 @@ namespace EmployeePortal.API.Controllers
 
         }
         [HttpPost("deleteUser")]
-        public async Task<IActionResult> Delete(User _user)
+        public async Task<IActionResult> DeleteUser(User _user)
         {
             if (_user != null)
             {
@@ -121,5 +86,26 @@ namespace EmployeePortal.API.Controllers
                 return Unauthorized("Invalid credentials");
             }
         }
+        [HttpPost("login")]
+        public async Task<IActionResult> LoginUser(User _user)
+        {
+            if (_user != null)
+            {
+                var data =await _accountBALRepo.UserValidateUserCredentials(_user);
+                if (data)
+                {
+                    return Ok("Login Successfully");
+                }
+                else
+                {
+                    return Ok("Make sure the credentials are correct");
+                }
+            }
+            else
+            {
+                return Unauthorized("Invalid credentials");
+            }
+        }
+        
     }
 }

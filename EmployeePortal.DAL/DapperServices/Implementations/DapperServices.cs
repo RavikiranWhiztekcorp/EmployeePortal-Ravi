@@ -24,8 +24,13 @@ namespace EmployeePortal.DAL.Services.Implementations
         {
             try
             {
-                var sql = GetSelectStoredProcedureName(entity);
-                var result = await con.QueryAsync<T>(sql);
+                var sql = GetSelectStoredProcedureName(entity)+ " @Id";
+                var parameters = new DynamicParameters();
+                foreach (var property in entity.GetType().GetProperties())
+                {
+                    parameters.Add("@" + property.Name, property.GetValue(entity));
+                };
+                var result = await con.QueryAsync<T>(sql,parameters);
                 return result;
             }
             catch (Exception ex)

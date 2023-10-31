@@ -8,8 +8,8 @@ namespace EmployeePortal.Common.Models
 {
     public class BaseEntity
     {
-        public Int64 Id { get; set; }
-        public DateTime CreatedDate { get; set; } = DateTime.Now;
+        public Int64? Id { get; set; }
+        public DateTime? CreatedDate { get; set; } = DateTime.Now;
         public DateTime? UpdatedDate { get; set; } = DateTime.Now;
     }
 }
