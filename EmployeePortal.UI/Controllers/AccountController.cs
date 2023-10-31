@@ -31,7 +31,7 @@ namespace EmployeePortal.UI.Controllers
 
                 // Make a POST request to the Web API
                 var response = await _apiService.PostAsync("api/Account/login", user);
-                if (!string.IsNullOrEmpty(response) && response == "Login Successfull")
+                if (!string.IsNullOrEmpty(response) && response == "Login Successfully")
                 {
                     // Handle a successful login
                     ViewBag.Username = model.Username.ToString();
@@ -40,7 +40,6 @@ namespace EmployeePortal.UI.Controllers
                 else
                 {
                     // Handle the case where the API request fails or login is unsuccessful
-                    ModelState.AddModelError(string.Empty, response);
                     ModelState.AddModelError(string.Empty, "API request failed or login was unsuccessful");
                 }
             }

@@ -153,6 +153,25 @@ namespace EmployeePortal.DAL.Services.Implementations
                 throw ex;
             }
         }
+        public async Task<T> ValidateAsync(T entity)
+        {
+            try
+            {
+                var sql = GetSelectStoredProcedureName(entity) + "Validate @Username,@Password";
+                var parameters = new DynamicParameters();
+                foreach (var property in entity.GetType().GetProperties())
+                {
+                    parameters.Add("@" + property.Name, property.GetValue(entity));
+                };
+                var result = await con.QueryFirstOrDefaultAsync<T>(sql, parameters);
+                return result;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
 
         private string GetInsertStoredProcedureName(T entity)
         {

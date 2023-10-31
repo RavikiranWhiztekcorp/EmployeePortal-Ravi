@@ -37,7 +37,7 @@ namespace EmployeePortal.DAL.Implementations
             //var result = await dapperService.ReadAllAsync();
             //return result;
             #endregion
-            var result = await _userRepository.ReadAllAsync(new User());
+            var result = await _userRepository.ReadAllAsync(new User() { Id=null,Username=null,Password=null});
             return result;
         }
         public async Task<User> GetByIdAsync(User user)
@@ -91,16 +91,16 @@ namespace EmployeePortal.DAL.Implementations
         }
         public async Task<User> GetByUserNameAsync(string username, string password)
         {
-            var user= await _userRepository.ReadGetByIdAsync(new User() { Username = username, Password = password });
+            var user= await _userRepository.ValidateAsync(new User() { Username = username, Password = password });
             return user;
-            #region sql qurey
-            var con = new SqlConnection("Server=LAPTOP-46NPMGS0\\SQLEXPRESS;Database=ATSDB;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=true");
-            var query = "SELECT * FROM Account_tbl WHERE Username = @Username AND Password=@password";
-            {
-                var result = await con.QuerySingleOrDefaultAsync<User>(query, new { username, password });
-                return result;
-            }
-            #endregion
+            //#region sql qurey
+            //var con = new SqlConnection("Server=LAPTOP-46NPMGS0\\SQLEXPRESS;Database=ATSDB;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=true");
+            //var query = "SELECT * FROM Account_tbl WHERE Username = @Username AND Password=@password";
+            //{
+            //    var result = await con.QuerySingleOrDefaultAsync<User>(query, new { username, password });
+            //    return result;
+            //}
+            //#endregion
         }
         public async Task<bool> UserValidateUserCredentials(User user)
         {
