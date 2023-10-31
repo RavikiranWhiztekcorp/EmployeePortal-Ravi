@@ -2,19 +2,16 @@
 using EmployeePortal.Common.Models.Account;
 using EmployeePortal.DAL.Services.Interfaces;
 using Microsoft.Data.SqlClient;
-using Newtonsoft.Json;
-using NPOI.SS.Formula.Functions;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace EmployeePortal.DAL.Services.Implementations
 {
-    public class DapperServices : IDapperServices<User>
+    public class DapperServices<T> : IDapperServices<T>
     {
         private string constring = "Server=LAPTOP-46NPMGS0\\SQLEXPRESS;Database=ATSDB;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=true";
         private SqlConnection con;
@@ -24,80 +21,114 @@ namespace EmployeePortal.DAL.Services.Implementations
             con.Open();
         }
 
-        public async Task CreateAsync(User _user)
+        public async Task CreateAsync(T entity)
         {
-            var sql = "EXEC SP_Account 'Insert',@Id, @Username,@Email, @Password,@Role, @CreatedDate, @UpdatedDate";
+            List<string> prop = new List<string>();
+            foreach (var property in entity.GetType().GetProperties())
+            {
+                prop.Add(property.Name);
+            }
+            var pro = "";
+            for (int i = 0; i < prop.Count; i++)
+            {
+                if (prop[i] == "Id")
+                {
+                    pro += "";
+                }
+                else
+                {
+                    pro += "@" + prop[i] + ",";
+                }
+            }
+            pro = pro.TrimEnd(',');
             var parameters = new DynamicParameters();
-            parameters.Add("@Id", _user.Id, DbType.Int32);
-            parameters.Add("@Username", _user.Username, DbType.String);
-            parameters.Add("@Email", _user.Email, DbType.String);
-            parameters.Add("@Password", _user.Password, DbType.String);
-            parameters.Add("@Role", _user.Role, DbType.String);
-            parameters.Add("@CreatedDate", _user.CreatedDate, DbType.DateTime);
-            parameters.Add("@UpdatedDate", _user.UpdatedDate, DbType.DateTime);
+            foreach (var property in entity.GetType().GetProperties())
+            {
+                parameters.Add("@" + property.Name, property.GetValue(entity));
+            }
+            var sql = GetInsertStoredProcedureName(entity) + " " + pro;
 
             await con.ExecuteAsync(sql, parameters);
         }
-        public async Task<IEnumerable<User>> ReadAllAsync()
+        public async Task<T> ReadGetByIdAsync(T entity)
         {
-            int id = 0;
-            var sql = "EXEC SP_Account 'Select' ";
+            var sql = GetSelectStoredProcedureName(entity) + " @Id";
             var parameters = new DynamicParameters();
-            parameters.Add("@Id", id, DbType.Int32);
-            parameters.Add("@Username", "", DbType.String);
-            parameters.Add("@Email", "", DbType.String);
-            parameters.Add("@Password", "", DbType.String);
-            parameters.Add("@Role", "", DbType.String);
-            parameters.Add("@CreatedDate", DateTime.Now, DbType.DateTime);
-            parameters.Add("@UpdatedDate", DateTime.Now, DbType.DateTime);
-            var users = await con.QueryAsync<User>(sql,parameters);
-            return users;
+            foreach (var property in entity.GetType().GetProperties())
+            {
+                parameters.Add("@" + property.Name, property.GetValue(entity));
+            }
+            var result = await con.QueryFirstOrDefaultAsync<T>(sql, parameters);
+            return result;
         }
-        //public async Task<User> ReadAsync(int id)
-        //{
-        //    var sql = "EXEC SP_Account 'Select',@Id, @Username,@Email, @Password,@Role, @CreatedDate, @UpdatedDate";
-        //    var parameters = new DynamicParameters();
-        //    parameters.Add("@Id",id, DbType.Int32);
-        //    parameters.Add("@Username", "", DbType.String);
-        //    parameters.Add("@Email", "", DbType.String);
-        //    parameters.Add("@Password", "", DbType.String);
-        //    parameters.Add("@Role", "", DbType.String);
-        //    parameters.Add("@CreatedDate", "", DbType.DateTime);
-        //    parameters.Add("@UpdatedDate", "", DbType.DateTime);
+        public async Task<IEnumerable<T>> ReadAllAsync(T entity)
+        {
+            var sql = GetSelectStoredProcedureName(entity);
+            var result = await con.QueryAsync<T>(sql);
+            return result;
+        }
+        public async Task UpdateAsync(T entity)
+        {
 
-        //    var User = await con.QueryFirstOrDefaultAsync<User>(sql, parameters);
-        //    return User;
-        //}
+            List<string> prop = new List<string>();
+            foreach (var property in entity.GetType().GetProperties())
+            {
+                if (property.GetValue(entity) != null)
+                {
+                    prop.Add(property.Name != "CreatedDate" ? property.Name : "");
+                }
+            }
+            var pro = "";
+            for (int i = 0; i < prop.Count; i++)
+            {
+                if (prop[i] == "")
+                {
+                    pro += "";
+                }
+                else
+                {
+                    pro += "@" + prop[i] + ",";
+                }
+            }
+            pro = pro.TrimEnd(',');
+            var parameters = new DynamicParameters();
+            foreach (var property in entity.GetType().GetProperties())
+            {
+                parameters.Add("@" + property.Name, property.GetValue(entity));
+            }
+            var sql = GetUpdateStoredProcedureName(entity) + " " + pro;
 
-        //public async Task UpdateAsync(User _user)
-        //{
-        //    var sql = "EXEC SP_Account 'Update',@Id, @Username,@Email, @Password,@Role, @CreatedDate, @UpdatedDate";
-        //    var parameters = new DynamicParameters();
-        //    parameters.Add("@Id", _user.Id, DbType.Int32);
-        //    parameters.Add("@Username", _user.Username, DbType.String);
-        //    parameters.Add("@Email", _user.Email, DbType.String);
-        //    parameters.Add("@Password", _user.Password, DbType.String);
-        //    parameters.Add("@Role", _user.Role, DbType.String);
-        //    parameters.Add("@CreatedDate", _user.CreatedDate, DbType.DateTime);
-        //    parameters.Add("@UpdatedDate", _user.UpdatedDate, DbType.DateTime);
+            await con.ExecuteAsync(sql, parameters);
+        }
+        public async Task DeleteAsync(T entity)
+        {
+            var sql = GetDeleteStoredProcedureName(entity) + " @Id";
+            var parameters = new DynamicParameters();
+            foreach (var property in entity.GetType().GetProperties())
+            {
+                parameters.Add("@" + property.Name, property.GetValue(entity));
+            }
+            await con.ExecuteAsync(sql, parameters);
+        }
 
+        private string GetInsertStoredProcedureName(T entity)
+        {
+            return $"EXEC sp_Insert{entity.GetType().Name}";
+        }
 
-        //    await con.ExecuteAsync(sql, parameters);
-        //}
+        private string GetSelectStoredProcedureName(T entity)
+        {
+            return $"EXEC sp_Select{entity.GetType().Name}";
+        }
 
-        //public async Task DeleteAsync(int id)
-        //{
-        //    var sql = "EXEC SP_Account 'Delete',@Id, @Username,@Email, @Password,@Role, @CreatedDate, @UpdatedDate";
-        //    var parameters = new DynamicParameters();
-        //    parameters.Add("@Id", id, DbType.Int32);
-        //    parameters.Add("@Username", "", DbType.String);
-        //    parameters.Add("@Email", "", DbType.String);
-        //    parameters.Add("@Password", "", DbType.String);
-        //    parameters.Add("@Role", "", DbType.String);
-        //    parameters.Add("@CreatedDate", "", DbType.DateTime);
-        //    parameters.Add("@UpdatedDate", "", DbType.DateTime);
+        private string GetUpdateStoredProcedureName(T entity)
+        {
+            return $"EXEC sp_Update{entity.GetType().Name}";
+        }
 
-        //    await con.ExecuteAsync(sql, parameters);
-        //}
+        private string GetDeleteStoredProcedureName(T entity)
+        {
+            return $"EXEC sp_Delete{entity.GetType().Name}";
+        }
     }
 }

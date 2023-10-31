@@ -11,6 +11,9 @@ namespace EmployeePortal.DAL.Interfaces
     {
         bool ValidateUserCredentials(string username, string password);
         Task<IEnumerable<User>> GetAllAsync();
+        Task<User> GetByIdAsync(User user);
+        Task<bool> Update(User _user);
+        Task<bool> Delete(User _user);
         Task<bool> UserValidateUserCredentials(User user);
         Task<User> GetByUserNameAsync(string username,string password);
         Task<bool> Create(User _user);

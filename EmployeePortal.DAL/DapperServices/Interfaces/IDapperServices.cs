@@ -1,19 +1,17 @@
-﻿using EmployeePortal.Common.Models.Account;
-using NPOI.SS.Formula.Functions;
-
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace EmployeePortal.DAL.Services.Interfaces
 {
     public interface IDapperServices<T>
     {
-        //IEnumerable<T> GetAll(string sp_name, T entity);
-        //bool Add(string sp_name, T entity);
-        //bool Update(string sp_name, T entity);
-        //bool Delete(string sp_name, T entity);
         Task CreateAsync(T entity);
-        Task<IEnumerable<T>> ReadAllAsync();
-        //Task<T> ReadAsync(int id);
-        //Task UpdateAsync(T entity);
-        //Task DeleteAsync(int id);
+        Task<T> ReadGetByIdAsync(T entity);
+        Task<IEnumerable<T>> ReadAllAsync(T entity);
+        Task UpdateAsync(T entity);
+        Task DeleteAsync(T entity);
     }
 }

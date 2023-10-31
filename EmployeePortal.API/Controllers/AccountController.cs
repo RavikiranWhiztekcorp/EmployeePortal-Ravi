@@ -29,10 +29,15 @@ namespace EmployeePortal.API.Controllers
         //    }
         //}
 
-        [HttpGet("getallusers")]
+        [HttpGet("getallUsers")]
         public async Task<IEnumerable<User>> GetAllUsers()
         {
             return await _accountBALRepo.GetAllAsync();
+        }
+        [HttpPost("getbyidUser")]
+        public async Task<User> GetByIdUser(User user)
+        {
+            return await _accountBALRepo.GetByIdAsync(user);
         }
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] User user)
@@ -64,6 +69,47 @@ namespace EmployeePortal.API.Controllers
                 if (data)
                 {
                     return Ok("Login Successfull");
+                }
+                else
+                {
+                    return Ok("Make sure the credentials are correct");
+                }
+            }
+            else
+            {
+                return Unauthorized("Invalid credentials");
+            }
+        }
+        [HttpPut("updateUser")]
+        public async Task<IActionResult> Update(User _user)
+        {
+            if (_user != null)
+            {
+                var data = await _accountBALRepo.Update(_user);
+                if (data)
+                {
+                    return Ok("Update Successfull");
+                }
+                else
+                {
+                    return Ok("Make sure the credentials are correct");
+                }
+            }
+            else
+            {
+                return Unauthorized("Invalid credentials");
+            }
+
+        }
+        [HttpPost("deleteUser")]
+        public async Task<IActionResult> Delete(User _user)
+        {
+            if (_user != null)
+            {
+                var data = await _accountBALRepo.Delete(_user);
+                if (data)
+                {
+                    return Ok("Delete Successfull");
                 }
                 else
                 {

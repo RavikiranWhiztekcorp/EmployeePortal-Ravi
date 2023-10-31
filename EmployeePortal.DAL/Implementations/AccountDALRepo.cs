@@ -19,7 +19,7 @@ namespace EmployeePortal.DAL.Implementations
     {
         private string constring = "Server=LAPTOP-46NPMGS0\\SQLEXPRESS;Database=ATSDB;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=true";
         private SqlConnection con;
-        DapperSPServices<User> userRepository = new DapperSPServices<User>();
+        DapperServices<User> userRepository = new DapperServices<User>();
 
         public AccountDALRepo(){
             con = new SqlConnection(constring);
@@ -55,6 +55,10 @@ namespace EmployeePortal.DAL.Implementations
 
             var result = await userRepository.ReadAllAsync(new User());
             return result;
+        }
+        public async Task<User> GetByIdAsync(User user)
+        {
+             return await userRepository.ReadGetByIdAsync(user);
         }
         public async Task<bool> UserValidateUserCredentials(User user)
         {
@@ -98,6 +102,24 @@ namespace EmployeePortal.DAL.Implementations
             }
             return false;
 
+        }
+        public async Task<bool> Update(User _user)
+        {
+            if (_user != null)
+            {
+                await userRepository.UpdateAsync(_user);
+                return true;
+            }
+            return false;
+        }
+        public async Task<bool> Delete(User _user)
+        {
+            if (_user != null)
+            {
+                await userRepository.DeleteAsync(_user);
+                return true;
+            }
+            return false;
         }
     }
 }
