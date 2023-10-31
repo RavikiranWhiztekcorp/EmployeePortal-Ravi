@@ -8,9 +8,9 @@ namespace EmployeePortal.DAL.Services.Interfaces
 {
     public interface IDapperServices<T>
     {
-        Task CreateAsync(T entity);
-        Task<T> ReadGetByIdAsync(T entity);
         Task<IEnumerable<T>> ReadAllAsync(T entity);
+        Task<T> ReadGetByIdAsync(T entity);
+        Task CreateAsync(T entity);
         Task UpdateAsync(T entity);
         Task DeleteAsync(T entity);
     }

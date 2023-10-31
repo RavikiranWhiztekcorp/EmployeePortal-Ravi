@@ -20,95 +20,133 @@ namespace EmployeePortal.DAL.Services.Implementations
             con = new SqlConnection(constring);
             con.Open();
         }
-
-        public async Task CreateAsync(T entity)
+        public async Task<IEnumerable<T>> ReadAllAsync(T entity)
         {
-            List<string> prop = new List<string>();
-            foreach (var property in entity.GetType().GetProperties())
+            try
             {
-                prop.Add(property.Name);
+                var sql = GetSelectStoredProcedureName(entity);
+                var result = await con.QueryAsync<T>(sql);
+                return result;
             }
-            var pro = "";
-            for (int i = 0; i < prop.Count; i++)
+            catch (Exception ex)
             {
-                if (prop[i] == "Id")
-                {
-                    pro += "";
-                }
-                else
-                {
-                    pro += "@" + prop[i] + ",";
-                }
+                throw ex;
             }
-            pro = pro.TrimEnd(',');
-            var parameters = new DynamicParameters();
-            foreach (var property in entity.GetType().GetProperties())
-            {
-                parameters.Add("@" + property.Name, property.GetValue(entity));
-            }
-            var sql = GetInsertStoredProcedureName(entity) + " " + pro;
-
-            await con.ExecuteAsync(sql, parameters);
         }
         public async Task<T> ReadGetByIdAsync(T entity)
         {
-            var sql = GetSelectStoredProcedureName(entity) + " @Id";
-            var parameters = new DynamicParameters();
-            foreach (var property in entity.GetType().GetProperties())
+            try
             {
-                parameters.Add("@" + property.Name, property.GetValue(entity));
+                var sql = GetSelectStoredProcedureName(entity) + " @Id";
+                var parameters = new DynamicParameters();
+                foreach (var property in entity.GetType().GetProperties())
+                {
+                    parameters.Add("@" + property.Name, property.GetValue(entity));
+                }
+                var result = await con.QueryFirstOrDefaultAsync<T>(sql, parameters);
+                return result;
             }
-            var result = await con.QueryFirstOrDefaultAsync<T>(sql, parameters);
-            return result;
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
-        public async Task<IEnumerable<T>> ReadAllAsync(T entity)
+        public async Task CreateAsync(T entity)
         {
-            var sql = GetSelectStoredProcedureName(entity);
-            var result = await con.QueryAsync<T>(sql);
-            return result;
+            try
+            {
+                List<string> prop = new List<string>();
+                foreach (var property in entity.GetType().GetProperties())
+                {
+                    prop.Add(property.Name);
+                }
+                var pro = "";
+                for (int i = 0; i < prop.Count; i++)
+                {
+                    if (prop[i] == "Id")
+                    {
+                        pro += "";
+                    }
+                    else
+                    {
+                        pro += "@" + prop[i] + ",";
+                    }
+                }
+                pro = pro.TrimEnd(',');
+                var parameters = new DynamicParameters();
+                foreach (var property in entity.GetType().GetProperties())
+                {
+                    parameters.Add("@" + property.Name, property.GetValue(entity));
+                }
+                var sql = GetInsertStoredProcedureName(entity) + " " + pro;
+
+                await con.ExecuteAsync(sql, parameters);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
         public async Task UpdateAsync(T entity)
         {
 
-            List<string> prop = new List<string>();
-            foreach (var property in entity.GetType().GetProperties())
+            try
             {
-                if (property.GetValue(entity) != null)
+                List<string> prop = new List<string>();
+                foreach (var property in entity.GetType().GetProperties())
                 {
-                    prop.Add(property.Name != "CreatedDate" ? property.Name : "");
+                    if (property.GetValue(entity) != null)
+                    {
+                        prop.Add(property.Name != "CreatedDate" ? property.Name : "");
+                    }
                 }
-            }
-            var pro = "";
-            for (int i = 0; i < prop.Count; i++)
-            {
-                if (prop[i] == "")
+                var pro = "";
+                for (int i = 0; i < prop.Count; i++)
                 {
-                    pro += "";
+                    if (prop[i] == "")
+                    {
+                        pro += "";
+                    }
+                    else
+                    {
+                        pro += "@" + prop[i] + ",";
+                    }
                 }
-                else
+                pro = pro.TrimEnd(',');
+                var parameters = new DynamicParameters();
+                foreach (var property in entity.GetType().GetProperties())
                 {
-                    pro += "@" + prop[i] + ",";
+                    parameters.Add("@" + property.Name, property.GetValue(entity));
                 }
-            }
-            pro = pro.TrimEnd(',');
-            var parameters = new DynamicParameters();
-            foreach (var property in entity.GetType().GetProperties())
-            {
-                parameters.Add("@" + property.Name, property.GetValue(entity));
-            }
-            var sql = GetUpdateStoredProcedureName(entity) + " " + pro;
+                var sql = GetUpdateStoredProcedureName(entity) + " " + pro;
 
-            await con.ExecuteAsync(sql, parameters);
+                await con.ExecuteAsync(sql, parameters);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
         public async Task DeleteAsync(T entity)
         {
-            var sql = GetDeleteStoredProcedureName(entity) + " @Id";
-            var parameters = new DynamicParameters();
-            foreach (var property in entity.GetType().GetProperties())
+            try
             {
-                parameters.Add("@" + property.Name, property.GetValue(entity));
+                var sql = GetDeleteStoredProcedureName(entity) + " @Id";
+                var parameters = new DynamicParameters();
+                foreach (var property in entity.GetType().GetProperties())
+                {
+                    parameters.Add("@" + property.Name, property.GetValue(entity));
+                }
+                await con.ExecuteAsync(sql, parameters);
             }
-            await con.ExecuteAsync(sql, parameters);
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         private string GetInsertStoredProcedureName(T entity)
