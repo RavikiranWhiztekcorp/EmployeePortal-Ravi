@@ -31,6 +31,7 @@ namespace EmployeePortal.DAL.Services.Implementations
                     parameters.Add("@" + property.Name, property.GetValue(entity));
                 };
                 var result = await con.QueryAsync<T>(sql,parameters);
+                con.Close();
                 return result;
             }
             catch (Exception ex)
@@ -49,6 +50,7 @@ namespace EmployeePortal.DAL.Services.Implementations
                     parameters.Add("@" + property.Name, property.GetValue(entity));
                 }
                 var result = await con.QueryFirstOrDefaultAsync<T>(sql, parameters);
+                con.Close();
                 return result;
             }
             catch (Exception ex)
@@ -87,6 +89,7 @@ namespace EmployeePortal.DAL.Services.Implementations
                 var sql = GetInsertStoredProcedureName(entity) + " " + pro;
 
                 await con.ExecuteAsync(sql, parameters);
+                con.Close();
             }
             catch (Exception ex)
             {
@@ -128,6 +131,7 @@ namespace EmployeePortal.DAL.Services.Implementations
                 var sql = GetUpdateStoredProcedureName(entity) + " " + pro;
 
                 await con.ExecuteAsync(sql, parameters);
+                con.Close();
             }
             catch (Exception ex)
             {
@@ -146,6 +150,7 @@ namespace EmployeePortal.DAL.Services.Implementations
                     parameters.Add("@" + property.Name, property.GetValue(entity));
                 }
                 await con.ExecuteAsync(sql, parameters);
+                con.Close();
             }
             catch (Exception ex)
             {
@@ -164,6 +169,7 @@ namespace EmployeePortal.DAL.Services.Implementations
                     parameters.Add("@" + property.Name, property.GetValue(entity));
                 };
                 var result = await con.QueryFirstOrDefaultAsync<T>(sql, parameters);
+                con.Close();
                 return result;
             }
             catch (Exception ex)
