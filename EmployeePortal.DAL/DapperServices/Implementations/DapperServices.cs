@@ -13,7 +13,7 @@ namespace EmployeePortal.DAL.Services.Implementations
 {
     public class DapperServices<T> : IDapperServices<T>
     {
-        private string constring = "Server=LAPTOP-46NPMGS0\\SQLEXPRESS;Database=ATSDB;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=true";
+        private string constring = "Server=WHIZTEK1\\SQLEXPRESS;Database=ATSDB;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=true";
         private SqlConnection con;
         public DapperServices()
         {
@@ -181,22 +181,22 @@ namespace EmployeePortal.DAL.Services.Implementations
 
         private string GetInsertStoredProcedureName(T entity)
         {
-            return $"EXEC sp_Insert{entity.GetType().Name}";
+            return $"EXEC spInsert{entity.GetType().Name}";
         }
 
         private string GetSelectStoredProcedureName(T entity)
         {
-            return $"EXEC sp_Select{entity.GetType().Name}";
+            return $"EXEC spSelect{entity.GetType().Name}";
         }
 
         private string GetUpdateStoredProcedureName(T entity)
         {
-            return $"EXEC sp_Update{entity.GetType().Name}";
+            return $"EXEC spUpdate{entity.GetType().Name}";
         }
 
         private string GetDeleteStoredProcedureName(T entity)
         {
-            return $"EXEC sp_Delete{entity.GetType().Name}";
+            return $"EXEC spDelete{entity.GetType().Name}";
         }
     }
 }
