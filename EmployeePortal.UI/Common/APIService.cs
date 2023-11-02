@@ -11,7 +11,17 @@ namespace EmployeePortal.UI.Common
         {
             _httpClient = httpClient;
         }
-
+        public async Task<IEnumerable<T>> GetAllAsync<T>(string requestUri)
+        {
+            var response = await _httpClient.GetAsync(requestUri);
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<IEnumerable<T>>(content);
+            }
+            return Enumerable.Empty<T>(); 
+            // Handle error scenarios or throw exceptions as needed
+        }
         public async Task<T> GetAsync<T>(string requestUri)
         {
             var response = await _httpClient.GetAsync(requestUri);

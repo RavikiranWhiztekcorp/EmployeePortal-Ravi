@@ -14,17 +14,17 @@ namespace EmployeePortal.API.Controllers
         {
             _accountBALRepo = new AccountBALRepo();
         }
-        [HttpGet("getallUsers")]
+        [HttpGet("GetAllUsers")]
         public async Task<IEnumerable<User>> GetAllUsers()
         {
             return await _accountBALRepo.GetAllAsync();
         }
-        [HttpPost("getbyidUser")]
+        [HttpPost("GetUserById")]
         public async Task<User> GetByIdUser(User _user)
         {
             return await _accountBALRepo.GetByIdAsync(_user);
         }
-        [HttpPost("register")]
+        [HttpPost("Register")]
         public async Task<IActionResult> RegisterUser([FromBody] User _user)
         {
             if (_user != null)
@@ -45,7 +45,7 @@ namespace EmployeePortal.API.Controllers
                 return Unauthorized("Invalid credentials");
             }
         }
-        [HttpPut("updateUser")]
+        [HttpPut("UpdateUser")]
         public async Task<IActionResult> UpdateUser(User _user)
         {
             if (_user != null)
@@ -66,7 +66,7 @@ namespace EmployeePortal.API.Controllers
             }
 
         }
-        [HttpPost("deleteUser")]
+        [HttpPost("DeleteUser")]
         public async Task<IActionResult> DeleteUser(User _user)
         {
             if (_user != null)
@@ -86,7 +86,7 @@ namespace EmployeePortal.API.Controllers
                 return Unauthorized("Invalid credentials");
             }
         }
-        [HttpPost("login")]
+        [HttpPost("Login")]
         public async Task<IActionResult> LoginUser(User _user)
         {
             if (_user != null)

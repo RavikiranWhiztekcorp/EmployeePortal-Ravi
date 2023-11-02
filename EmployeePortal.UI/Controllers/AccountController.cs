@@ -96,7 +96,6 @@ namespace EmployeePortal.UI.Controllers
         [HttpGet]
         public IActionResult MyTask()
         {
-
             return View();
         }
         [HttpPost]

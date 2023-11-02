@@ -24,19 +24,19 @@ namespace EmployeePortal.API.Controllers
         {
             return await _employeeBALRepo.GetEmployeeByidAsync(_employee);
         }
-        [HttpPost("Create")]
+        [HttpPost("CreateEmployee")]
         public async Task<bool> Create(Employee _employee)
         {
             return await _employeeBALRepo.Create(_employee);
 
         }
-        [HttpPut("Update")]
+        [HttpPut("UpdateEmployee")]
         public async Task<bool> Update(Employee _employee)
         {
             return await _employeeBALRepo.Update(_employee);
 
         }
-        [HttpDelete("Delete")]
+        [HttpDelete("DeleteEmployee")]
         public async Task<bool> Delete(Employee employee)
         {
             return await _employeeBALRepo.Delete(employee);
