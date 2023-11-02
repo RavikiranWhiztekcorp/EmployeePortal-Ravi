@@ -2,103 +2,45 @@
     ViewData["Title"] = "Employee Directory";
 }
 @model IEnumerable<EmployeePortal.Common.Models.Employee>
-@*
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Age</th>
-            <th>Email</th>
-            <th>Phone Number</th>
-            <th>Aadhaar Number</th>
-            <th>Address</th>
-            <th>Salary</th>
-            <th>Department ID</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var employee in Model)
-        {
-            <tr>
-                <td>@employee.Id</td>
-                <td>@employee.FirstName</td>
-                <td>@employee.LastName</td>
-                <td>@employee.Age</td>
-                <td>@employee.Email</td>
-                <td>@employee.PhoneNo</td>
-                <td>@employee.AadharNo</td>
-                <td>@employee.Address</td>
-                <td>@employee.Salary</td>
-                <td>@employee.DepartmentId</td>
-            </tr>
-        }
-    </tbody>
-</table>
- *@
-
-<div>
-    <h1>Employees Directory</h1>
+<div class="mt-2">
+    <div class="row">
+        <div class="col-md-7">
+            <h2>Employees</h2>
+        </div>
+        <div class="col-md-5">
+            <div class="input-group">
+                <input type="text" class="form-control py-2" placeholder="Search...">
+                <div class="input-group-append">
+                    <button class="btn btn-primary py-2" type="button"><i class="fa fa-search"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <a href="/Employee/Create" class="btn btn-primary">Create<a/>
+        </div>
+        <div class="col-md-6">
+        </div>
+    </div>
+    <hr />
     <div class="row pb-5 mb-4">
         @foreach (var item in Model)
         {
             <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
-                <!-- Card-->
                 <div class="card rounded shadow-sm border-0">
                     <div class="card-body">
-                        <img src="~/images/01.jpg" alt="" class="img-fluid d-block mx-auto mb-3">
+                        <img src="~/images/01.jpg" alt="" class="img-fluid mb-3">
                         <h5> <a href="#" class="text-dark">@item.FirstName @item.LastName</a></h5>
                         <p class="small text-muted font-italic">@item.DepartmentId</p>
-                        <p class="small text-muted font-italic">@item.Email</p>
-                        <p class="small text-muted font-italic">@item.PhoneNo</p>
+                        <ul class="list-inline small">
+                            <li class="list-inline-item m-0"><i class="fa-solid fa-envelope me-2"></i>@item.Email</li>
+                            <li class="list-inline-item m-0"><i class="fa-solid fa-phone me-2"></i>@item.PhoneNo</li>
+                        </ul>
                     </div>
-                    <div class="card-footer bg-white d-flex justify-content-center">
-                        <a href="#" class="btn btn-primary">View Details</a>
-                    </div>
+                    <a asp-route="itemDetailsRoute" asp-route-id="@item.Id" class="btn btn-danger">View details</a>
                 </div>
             </div>
-
-            @* <div class="col-4 col-sm-4">
-        <div class="card">
-        <div class="row no-gutters">
-        <div class="col-md-4">
-        <div class="d-flex justify-content-center">
-        <img src="~/images/01.jpg" class="card-img" alt="Profile Image">
-        </div>
-        </div>
-        <div class="col-md-8">
-        <div class="card-body ">
-        <h5 class="card-title">@item.FirstName @item.LastName</h5>
-        <p class="card-text">@item.DepartmentId</p>
-        <p class="card-text">@item.Email</p>
-        <p class="card-text">@item.PhoneNo</p>
-        </div>
-        <div class="card-footer border-0">
-        <div class="d-flex justify-content-end">
-        <a href="#" class="btn btn-primary">View Details</a>
-        </div>
-        </div>
-        </div>
-        </div>
-        </div>
-        </div> *@
-
-            @*  <div class="col">
-        <div class="card mb-4 shadow-sm">
-        <div class="card-body">
-        <h3 class="card-title">@item.FirstName @item.LastName</h3>
-        <p class="card-text">@item.Email</p>
-        <div class="d-flex justify-content-between align-items-center">
-        <div class="btn-group">
-        <a asp-route="itemDetailsRoute" asp-route-id="@item.Id"
-        class="btn btn-sm btn-outline-secondary">View details</a>
-        </div>
-        <small class="text-muted">@item.PhoneNo</small>
-        </div>
-        </div>
-        </div>
-        </div> *@
         }
     </div>
 </div>

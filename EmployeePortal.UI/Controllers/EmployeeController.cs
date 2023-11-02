@@ -1,4 +1,5 @@
-﻿using EmployeePortal.Common.Models.Account;
+﻿using EmployeePortal.Common.Models;
+using EmployeePortal.Common.Models.Account;
 using EmployeePortal.UI.Common;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,8 +14,12 @@ namespace EmployeePortal.UI.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var data = await _apiService.GetAllAsync<EmployeePortal.Common.Models.Employee>("api/Employee/GetAllEmployees");
-            return View(data);
+            var employees = await _apiService.GetAllAsync<EmployeePortal.Common.Models.Employee>("api/Employee/GetAllEmployees");
+            return View(employees);
+        }
+        public async Task<IActionResult> Create()
+        {
+            return View();
         }
     }
 }

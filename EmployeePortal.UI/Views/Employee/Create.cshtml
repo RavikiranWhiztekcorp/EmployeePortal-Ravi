@@ -1,0 +1,160 @@
+﻿@{
+    ViewData["Title"] = "Create New Employee";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>New Employee Details View</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+          crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h3>New Employee Details</h3>
+            </div>
+            <div class="card-body">
+                <form>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="firstName">First Name</label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="firstName"
+                                       name="firstName"
+                                       placeholder="First Name" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="lastName">Last Name</label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="lastName"
+                                       name="lastName"
+                                       placeholder="Last Name" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email"
+                                       class="form-control"
+                                       id="email"
+                                       name="email"
+                                       placeholder="Email">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="phoneNumber">Phone Number</label>
+                                <input type="phone"
+                                       class="form-control"
+                                       id="phoneNumber"
+                                       name="phoneNumber" placeholder="Phone Number">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="age">Age</label>
+                                <input type="number"
+                                       class="form-control"
+                                       id="age"
+                                       name="age"
+                                       placeholder="Age">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="aadharNumber">AadharNumber</label>
+                                <input type="number"
+                                       class="form-control"
+                                       id="aadharNumber"
+                                       name="aadharNumber" placeholder="Aadhar Number">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="salary">Salary</label>
+                                <input type="number"
+                                       class="form-control"
+                                       id="salary"
+                                       name="salary"
+                                       placeholder="Salary">
+                            </div>
+                            <div class="form-group">
+                                <label for="department">Department</label>
+                                <select class="form-control"
+                                        id="department"
+                                        name="department">
+                                    <option value="">Select Department</option>
+                                    <option value="Engineering">Engineering</option>
+                                    <option value="Sales">Sales</option>
+                                    <option value="Marketing">Marketing</option>
+                                    <option value="Human Resources">Human Resources</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="salary">Address</label>
+                                    <textarea id="address"
+                                              name="address" 
+                                              rows="4" 
+                                              cols="77"
+                                              >
+                                    </textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @* <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="department">Department</label>
+                                <select class="form-control"
+                                        id="department"
+                                        name="department">
+                                    <option value="">Select Department</option>
+                                    <option value="Engineering">Engineering</option>
+                                    <option value="Sales">Sales</option>
+                                    <option value="Marketing">Marketing</option>
+                                    <option value="Human Resources">Human Resources</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div> *@
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>
+</body>
+</html>
+@*  @FirstName 
+@LastName 
+@Age 
+@Email 
+@PhoneNo 
+@AadharNo 
+@Address 
+@Salary 
+@DepartmentId 
+ *@
