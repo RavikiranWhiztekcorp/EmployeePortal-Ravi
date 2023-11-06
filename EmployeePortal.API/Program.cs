@@ -10,6 +10,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IEmployeeBALRepo, EmployeeBALRepo>();
+builder.Services.AddScoped<IDepartmentBALRepo, DepartmentBALRepo>();
+
 
 
 var app = builder.Build();
