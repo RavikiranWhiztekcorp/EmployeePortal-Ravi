@@ -13,15 +13,11 @@ namespace EmployeePortal.DAL.Implementations
 {
     public class DepartmentDALRepo : IDepartmentDALRepo<T>
     {
-        private string constring = "Server=LAPTOP-AD2EEPGA\\SQLEXPRESS;Database=ATSDB;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=true";
-        
-        private SqlConnection con;
-       
-        DapperServices<Department> departmentRepository = new DapperServices<Department>();
+        DapperServices<Department> departmentRepository;
 
         public DepartmentDALRepo()
         {
-            con = new SqlConnection(constring);
+            departmentRepository = new DapperServices<Department>();
         }
 
       

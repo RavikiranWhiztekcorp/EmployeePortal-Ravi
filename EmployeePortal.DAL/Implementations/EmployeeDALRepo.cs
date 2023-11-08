@@ -15,13 +15,10 @@ namespace EmployeePortal.DAL.Implementations
 {
     public class EmployeeDALRepo
     {
-        private string constring = "Server=WHIZTEK1\\SQLEXPRESS;Database=ATSDB;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=true";
-        private SqlConnection con;
-        DapperServices<Employee> employeeRepository = new DapperServices<Employee>();
-
+        DapperServices<Employee> employeeRepository ;
         public EmployeeDALRepo()
         {
-            con = new SqlConnection(constring);
+            employeeRepository = new DapperServices<Employee>();
         }
 
        

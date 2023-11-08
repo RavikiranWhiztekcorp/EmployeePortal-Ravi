@@ -69,6 +69,20 @@ namespace EmployeePortal.UI.Common
             // For example: throw custom exceptions, log the error, etc.
             return null; // Or return a default value
         }
+        public async Task<string> PutAsync<TRequest>(string requestUri, TRequest data)
+        {
+            var jsonContent = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
+            var response = await _httpClient.PutAsync(requestUri, jsonContent);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadAsStringAsync();
+            }
+
+            // Handle error scenarios or throw exceptions as needed
+            // For example: throw custom exceptions, log the error, etc.
+            return null; // Or return a default value
+        }
 
     }
 

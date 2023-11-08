@@ -1,5 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Employee Directory";
+    IEnumerable<EmployeePortal.Common.Models.Department> d = ViewData["department"] as IEnumerable<EmployeePortal.Common.Models.Department>;
 }
 @model IEnumerable<EmployeePortal.Common.Models.Employee>
 <div class="mt-2">
@@ -18,7 +19,7 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-            <a href="/Employee/Create" class="btn btn-primary">Create<a/>
+            <a href="/Employee/Create" class="btn btn-primary">Create<a />
         </div>
         <div class="col-md-6">
         </div>
@@ -31,16 +32,24 @@
                 <div class="card rounded shadow-sm border-0">
                     <div class="card-body">
                         <img src="~/images/01.jpg" alt="" class="img-fluid mb-3">
-                        <h5> <a href="#" class="text-dark">@item.FirstName @item.LastName</a></h5>
-                        <p class="small text-muted font-italic">@item.DepartmentId</p>
+                        <h5> <span class="text-dark">@item.FirstName @item.LastName</span></h5>
+                        @foreach (var ditem in d)
+                        {
+                            if (item.DepartmentId == ditem.Id)
+                            {
+                                <p class="small text-muted font-italic">@ditem.DepartmentName</p>
+                            }
+                        }
                         <ul class="list-inline small">
                             <li class="list-inline-item m-0"><i class="fa-solid fa-envelope me-2"></i>@item.Email</li>
                             <li class="list-inline-item m-0"><i class="fa-solid fa-phone me-2"></i>@item.PhoneNo</li>
                         </ul>
                     </div>
-                    <a asp-route="itemDetailsRoute" asp-route-id="@item.Id" class="btn btn-danger">View details</a>
+                    <div class="d-flex justify-content-evenly">
+                        <a href="@Url.Action("Update", "Employee", new { Id = item.Id })" id="detailsbtnid" class="btn btn-warning">Edit details</a>
+                        <a href="@Url.Action("Details", "Employee", new { Id = item.Id })" class="btn btn-danger">View details</a>
+                    </div>
                 </div>
             </div>
         }
-    </div>
 </div>
