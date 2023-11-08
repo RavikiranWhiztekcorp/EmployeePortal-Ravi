@@ -1,8 +1,6 @@
-﻿@model EmployeeViewModel
+﻿@model EmployeePortal.Common.Models.Employee
 @{
-    ViewData["Title"] = "Create New Employee";
-    // IEnumerable<EmployeePortal.Common.Models.Department> d = ViewData["department"] as IEnumerable<EmployeePortal.Common.Models.Department>;
-
+    ViewData["Title"] = "Update Employee";
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -23,13 +21,18 @@
                 <h3>New Employee Details</h3>
             </div>
             <div class="card-body">
-                <form asp-action="Create" asp-controller="Employee" method="post">
+                <form asp-action="Edit" asp-controller="Employee" method="post">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <input asp-for="Id" value="@Model.Id" type="number" class="form-control" readonly/>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label asp-for="FirstName">First Name</label>
-                                <input asp-for="FirstName" type="text" class="form-control" id="firstName" name="firstName" placeholder="First Name" />
+                                <input asp-for="FirstName" value="@Model.FirstName" type="text" class="form-control" id="firstName" name="firstName" placeholder="First Name" />
                                 <span asp-validation-for="FirstName" class="text-danger"></span>
                             </div>
                         </div>
@@ -87,8 +90,8 @@
                             </div>
                             <div class="form-group">
                                 <label asp-for="DepartmentId">DepartmentId</label>
-@*                                 <input asp-for="DepartmentId" type="number" class="form-control" id="departmentid" name="departmentid" placeholder="Department" />
- *@                                <select asp-for="DepartmentId" class="form-control" id="departmentid" name="departmentid">
+                                @*                                 <input asp-for="DepartmentId" type="number" class="form-control" id="departmentid" name="departmentid" placeholder="Department" />
+                                *@                                <select asp-for="DepartmentId" class="form-control" id="departmentid" name="departmentid">
                                     <option value="">-- Select Department --</option>
                                     @foreach (var department in ViewData["department"] as IEnumerable<EmployeePortal.Common.Models.Department>)
                                     {
@@ -112,99 +115,6 @@
 
                     <button type="submit" class="btn btn-primary register-button">Register</button>
                     <a href="~/Employee/Index" class="btn btn-danger">Cancel</a>
-
-                    @* <form asp-action="Create" asp-controller="Employee" method="post">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="row">
-                    <div class="col-md-6">
-                    <div class="form-group">
-                    <label asp-for="FirstName" >First Name</label>
-                    <input asp-for="FirstName"  type="text"
-                    class="form-control"
-                    id="firstName"
-                    name="firstName"
-                    placeholder="First Name" />
-                    </div>
-                    </div>
-                    <div class="col-md-6">
-                    <div class="form-group">
-                    <label asp-for="LastName">Last Name</label>
-                    <input asp-for="LastName"
-                    type="text"
-                    class="form-control"
-                    id="lastName"
-                    name="lastName"
-                    placeholder="Last Name" />
-                    </div>
-                    </div>
-                    </div>
-                    <div class="row">
-                    <div class="col-md-6">
-                    <div class="form-group">
-                    <label asp-for="Email" for="email">Email</label>
-                    <input asp-for="Email" type="email"
-                    class="form-control"
-                    id="email"
-                    name="email"
-                    placeholder="Email">
-                    </div>
-                    </div>
-                    <div class="col-md-6">
-                    <div class="form-group">
-                    <label asp-for="PhoneNo">Phone Number</label>
-                    <input asp-for="PhoneNo" type="number"
-                    class="form-control"
-                    name="phoneNumber" placeholder="Phone Number"/>
-                    </div>
-                    </div>
-                    </div>
-                    <div class="row">
-                    <div class="col-md-6">
-                    <div class="form-group">
-                    <label asp-for="Age">Age</label>
-                    <input asp-for="Age" type="number"
-                    class="form-control"
-                    id="age"
-                    name="age"
-                    placeholder="Age"/>
-                    </div>
-                    </div>
-                    <div class="col-md-6">
-                    <div class="form-group">
-                    <label asp-for="AadharNo">AadharNumber</label>
-                    <input asp-for="AadharNo" type="number"
-                    class="form-control"
-                    id="aadharNumber"
-                    name="aadharNumber" placeholder="Aadhar Number"/>
-                    </div>
-                    </div>
-                    </div>
-                    <div class="row">
-                    <div class="col-md-6">
-                    <div class="form-group">
-                    <label asp-for="Salary" for="salary">Salary</label>
-                    <input asp-for="Salary" type="number"
-                    class="form-control"
-                    id="salary"
-                    name="salary"
-                    placeholder="Salary">
-                    </div>
-                    <div class="form-group">
-                    <label asp-for="DepartmentId">Department</label>
-                    @* <select class="form-control"
-                    asp-for="DepartmentId"
-                    id="department"
-                    name="department">
-                    <option value="">Select Department</option>
-                    @foreach (var item in d)
-                    {
-                    <option value=@item.Id>@item.DepartmentName</option>
-
-                    }
-                    </select>
-                    </div>
-                    </div> *@
-
                 </form>
             </div>
         </div>

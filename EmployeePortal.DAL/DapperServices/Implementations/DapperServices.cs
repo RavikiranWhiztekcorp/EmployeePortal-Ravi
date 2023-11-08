@@ -13,7 +13,7 @@ namespace EmployeePortal.DAL.Services.Implementations
 {
     public class DapperServices<T> : IDapperServices<T>
     {
-        private string constring = "Server=LAPTOP-AD2EEPGA\\SQLEXPRESS;Database=ATSDB;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=true";
+        private string constring = "Server=LAPTOP-46NPMGS0\\SQLEXPRESS;Database=ATSDB;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=true";
         private SqlConnection con;
         public DapperServices()
         {
