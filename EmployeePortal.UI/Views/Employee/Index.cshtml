@@ -1,8 +1,9 @@
-﻿@{
+﻿@model IEnumerable<EmployeePortal.Common.Models.Employee> 
+@{
     ViewData["Title"] = "Employee Directory";
     IEnumerable<EmployeePortal.Common.Models.Department> d = ViewData["department"] as IEnumerable<EmployeePortal.Common.Models.Department>;
 }
-@model IEnumerable<EmployeePortal.Common.Models.Employee>
+
 <div class="mt-2">
     <div class="row">
         <div class="col-md-7">
@@ -32,12 +33,26 @@
                 <div class="card rounded shadow-sm border-0">
                     <div class="card-body">
                         <img src="~/images/01.jpg" alt="" class="img-fluid mb-3">
+                        <div class="text-on-image">
+@*                             <a href="@Url.Action("Delete", "Employee", new { Id = item.Id })" id="detailsbtnid" class="btn btn-warning">Edit details</a>
+ *@
+                            @* @Html.ActionLink("", "Delete",
+                        new { Id = item.Id },
+                        new
+                        {
+                        onclick = "return confirm('Are you sure of deleting the record?')",
+                        @class = "btn btn-outline-danger fa-solid fa-trash d-flex justify-content-end",
+                        }) *@
+                            <a href="@Url.Action("Delete", "Employee", new { Id = item.Id })" class=" btn btn-outline-danger">
+                        <i class="fa-solid fa-trash d-flex justify-content-end"></i>
+                        </a>
+                        </div>
                         <h5> <span class="text-dark">@item.FirstName @item.LastName</span></h5>
                         @foreach (var ditem in d)
                         {
                             if (item.DepartmentId == ditem.Id)
                             {
-                                <p class="small text-muted font-italic">@ditem.DepartmentName</p>
+                                <p class="small text-muted font-italic badge badge-success">@ditem.DepartmentName</p>
                             }
                         }
                         <ul class="list-inline small">
@@ -47,9 +62,10 @@
                     </div>
                     <div class="d-flex justify-content-evenly">
                         <a href="@Url.Action("Update", "Employee", new { Id = item.Id })" id="detailsbtnid" class="btn btn-warning">Edit details</a>
-                        <a href="@Url.Action("Details", "Employee", new { Id = item.Id })" class="btn btn-danger">View details</a>
+                        <a href="@Url.Action("Details", "Employee", new { Id = item.Id })" class="btn btn-success">View details</a>
                     </div>
                 </div>
             </div>
         }
+    </div>
 </div>

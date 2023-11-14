@@ -3,6 +3,8 @@ using EmployeePortal.Common.Models.Account;
 using EmployeePortal.UI.Common;
 using EmployeePortal.UI.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using PagedList;
 
 namespace EmployeePortal.UI.Controllers
 {
@@ -108,6 +110,33 @@ namespace EmployeePortal.UI.Controllers
             var data = await _apiService.PostAsync<EmployeePortal.Common.Models.Employee, EmployeePortal.Common.Models.Employee>("api/Employee/GetEmployeeById", new Employee() { Id = Id, FirstName = "string", LastName = "string", Email = "string", Address = "string" });
             ViewData["department"] = await _apiService.GetAllAsync<EmployeePortal.Common.Models.Department>("api/Department/GetAllDepartments");
             return View(data);
+        }
+        [HttpGet]
+        public async Task<IActionResult> Delete(int Id)
+        {
+            var data = await _apiService.PostAsync<EmployeePortal.Common.Models.Employee, EmployeePortal.Common.Models.Employee>("api/Employee/GetEmployeeById", new Employee() { Id = Id, FirstName = "string", LastName = "string", Email = "string", Address = "string" });
+            ViewData["department"] = await _apiService.GetAllAsync<EmployeePortal.Common.Models.Department>("api/Department/GetAllDepartments");
+            return View(data);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Delete(Employee employee)
+        {
+            var response = await _apiService.PostAsync<EmployeePortal.Common.Models.Employee>("api/Employee/DeleteEmployee", new Employee() { Id = employee.Id, FirstName = "string", LastName = "string", Email = "string", Address = "string" });
+            if (!string.IsNullOrEmpty(response) && response == "true")
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                // Handle the case where the API request fails or register is unsuccessful
+                if (response != null)
+                {
+                    ModelState.AddModelError(string.Empty, response);
+                }
+                ModelState.AddModelError(string.Empty, "API request failed or register was unsuccessful");
+            }
+            ModelState.AddModelError(string.Empty, "Invalid register attempt");
+            return View("Delete", employee);
         }
     }
 }

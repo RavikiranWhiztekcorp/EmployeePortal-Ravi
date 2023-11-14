@@ -36,11 +36,10 @@ namespace EmployeePortal.API.Controllers
             return await _employeeBALRepo.Update(_employee);
 
         }
-        [HttpDelete("DeleteEmployee")]
+        [HttpPost("DeleteEmployee")]
         public async Task<bool> Delete(Employee employee)
         {
             return await _employeeBALRepo.Delete(employee);
-
         }
     }
 }
