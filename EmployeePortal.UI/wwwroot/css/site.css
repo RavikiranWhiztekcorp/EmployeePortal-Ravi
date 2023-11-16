@@ -129,13 +129,13 @@ nav a:hover {
     color: #0056b3;
 }
 
-main {
+/*main {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-between;*/
 /*    padding: 20px 0;
 */
-}
+/*}*/
 
 .card {
     flex: 1;

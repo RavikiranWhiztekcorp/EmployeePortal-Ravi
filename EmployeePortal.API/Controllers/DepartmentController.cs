@@ -24,19 +24,19 @@ namespace EmployeePortal.API.Controllers
         {
             return await _departmentBALRepo.GetDepartmentByidAsync(_department);
         }
-        [HttpPost("Create")]
+        [HttpPost("CreateDepartment")]
         public async Task<bool> Create(Department _department)
         {
             return await _departmentBALRepo.Create(_department);
 
         }
-        [HttpPut("Update")]
+        [HttpPut("UpdateDepartment")]
         public async Task<bool> Update(Department _department)
         {
             return await _departmentBALRepo.Update(_department);
 
         }
-        [HttpDelete("Delete")]
+        [HttpPost("DeleteDepartment")]
         public async Task<bool> Delete(Department _department)
         {
             return await _departmentBALRepo.Delete(_department);
