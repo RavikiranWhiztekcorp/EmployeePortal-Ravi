@@ -17,6 +17,8 @@ namespace EmployeePortal.UI.Controllers
         }
         public async Task<IActionResult> Index()
         {
+            TempData["message"] = "This is Employee Index";
+
             var employees = await _apiService.GetAllAsync<EmployeePortal.Common.Models.Employee>("api/Employee/GetAllEmployees");
             ViewData["department"] = await _apiService.GetAllAsync<EmployeePortal.Common.Models.Department>("api/Department/GetAllDepartments");
             return View(employees);
@@ -50,6 +52,7 @@ namespace EmployeePortal.UI.Controllers
 
                 if (!string.IsNullOrEmpty(response) && response == "Employee Registred Successfull" || response == "true")
                 {
+                    TempData["message"] = response;
                     // Handle a successful Register
                     return RedirectToAction("Index");
                 }
@@ -86,7 +89,8 @@ namespace EmployeePortal.UI.Controllers
 
                 if (!string.IsNullOrEmpty(response) && response == "Employee Updated Successfull" || response == "true")
                 {
-                    // Handle a successful Register
+                    TempData["message"] = response;
+                    // Handle a successful Updated
                     return RedirectToAction("Index");
                 }
                 else
@@ -131,6 +135,7 @@ namespace EmployeePortal.UI.Controllers
                 // Handle the case where the API request fails or register is unsuccessful
                 if (response != null)
                 {
+                    TempData["message"] = "Employee Deleted Successfully";
                     ModelState.AddModelError(string.Empty, response);
                 }
                 ModelState.AddModelError(string.Empty, "API request failed or register was unsuccessful");
