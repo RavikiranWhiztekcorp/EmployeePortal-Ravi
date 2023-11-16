@@ -35,6 +35,7 @@ namespace EmployeePortal.UI.Controllers
                 {
                     // Handle a successful login
                     ViewBag.Username = model.Username.ToString();
+                    TempData["message"] = response;
                     return RedirectToAction("Welcome");
                 }
                 else
@@ -71,6 +72,7 @@ namespace EmployeePortal.UI.Controllers
                 if (!string.IsNullOrEmpty(response) && response == "Register Successfull")
                 {
                     // Handle a successful Register
+                    TempData["message"] = response;
                     return RedirectToAction("Login");
                 }
                 else
@@ -91,6 +93,7 @@ namespace EmployeePortal.UI.Controllers
         [HttpGet]
         public IActionResult Welcome()
         {
+
             return View();
         }
         [HttpGet]

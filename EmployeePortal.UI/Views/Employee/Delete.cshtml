@@ -1,8 +1,10 @@
 ﻿@model EmployeePortal.Common.Models.Employee
 @{
-    ViewData["Title"] = "Details Employee";
+    ViewData["Title"] = "Delete Employee";
     var data = ViewData["department"] as IEnumerable<EmployeePortal.Common.Models.Department>;
 }
+<partial name="_NotificationSuccess" />
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,8 +20,15 @@
     <div class="container">
         <div class="card">
             <div class="card-body">
-                    <div class="card-header">
-                    <h3>Employee Details</h3>
+                <div class="card-header">
+                    <h3>Delete Employee Details</h3>
+                </div>
+                <form asp-action="Delete" asp-controller="Employee" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <input asp-for="Id" value="@Model.Id" type="number" readonly hidden />
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
@@ -30,7 +39,7 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                            <label asp-for="LastName">Last Name : <b>@Model.LastName</b></label>
+                                <label asp-for="LastName">Last Name : <b>@Model.LastName</b></label>
                             </div>
                         </div>
                     </div>
@@ -38,13 +47,13 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                            <label asp-for="Email">Email Address : <b>@Model.Email</b></label>
+                                <label asp-for="Email">Email Address : <b>@Model.Email</b></label>
                             </div>
                         </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
-                            <label asp-for="PhoneNo">Phone Number : <b>@Model.PhoneNo</b></label>
+                                <label asp-for="PhoneNo">Phone Number : <b>@Model.PhoneNo</b></label>
                             </div>
                         </div>
                     </div>
@@ -52,39 +61,41 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                            <label asp-for="Age">Age : <b>@Model.Age</b></label>
+                                <label asp-for="Age">Age : <b>@Model.Age</b></label>
                             </div>
                         </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
-                            <label asp-for="AadharNo">Aadhar Number : <b>@Model.AadharNo</b></label>
+                                <label asp-for="AadharNo">Aadhar Number : <b>@Model.AadharNo</b></label>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                            <label asp-for="Salary">Salary : <b>@Model.Salary</b></label>
+                                <label asp-for="Salary">Salary : <b>@Model.Salary</b></label>
                             </div>
                             <div class="form-group">
-                            <label>DepartmentName : </label>
-                            @foreach (var department in data)
-                            {
-                                @if (Model.DepartmentId == department.Id)
+                                <label>DepartmentName : </label>
+                                @foreach (var department in data)
                                 {
-                                    <b>@department.DepartmentName</b>
+                                    @if (Model.DepartmentId == department.Id)
+                                    {
+                                        <b>@department.DepartmentName</b>
+                                    }
                                 }
-                            }
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                            <label asp-for="Address">Address : <b>@Model.Address</b></label>
+                                <label asp-for="Address">Address : <b>@Model.Address</b></label>
                             </div>
                         </div>
                     </div>
-                    <a href="~/Employee/Index" class="btn btn-info">Back to List</a>
+                    <button type="submit" class="btn btn-success register-button" onclick="return confirm('Do you really want to delete this Record?')">Delete</button>
+                    <a href="~/Employee/Index" class="btn btn-danger">Cancel</a>
+                </form>
             </div>
         </div>
     </div>

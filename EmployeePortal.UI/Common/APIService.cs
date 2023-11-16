@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System.Text;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace EmployeePortal.UI.Common
 {
@@ -82,6 +83,25 @@ namespace EmployeePortal.UI.Common
             // Handle error scenarios or throw exceptions as needed
             // For example: throw custom exceptions, log the error, etc.
             return null; // Or return a default value
+        }
+        public async Task<TResponse> DeleteAsync<TRequest, TResponse>(string requestUri, TRequest data)
+        {
+            try
+            {
+                var jsonContent = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
+                var response = await _httpClient.PostAsync(requestUri, jsonContent);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine(content);
+                    return JsonConvert.DeserializeObject<TResponse>(content);
+                }
+                return default(TResponse);
+            }
+            catch (Exception ex) { throw ex; }
+            // Handle error scenarios or throw exceptions as needed
+            // For example: return default(TResponse), throw custom exceptions, etc.
         }
 
     }

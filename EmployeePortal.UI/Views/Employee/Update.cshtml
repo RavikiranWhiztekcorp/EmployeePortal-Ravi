@@ -2,6 +2,8 @@
 @{
     ViewData["Title"] = "Update Employee";
 }
+<partial name="_NotificationSuccess" />
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,7 +20,7 @@
     <div class="container">
         <div class="card">
             <div class="card-header">
-                <h3>New Employee Details</h3>
+                <h3>Update Employee Details</h3>
             </div>
             <div class="card-body">
                 <form asp-action="Edit" asp-controller="Employee" method="post">
@@ -113,7 +115,7 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary register-button">Register</button>
+                    <button type="submit" class="btn btn-success register-button">Save</button>
                     <a href="~/Employee/Index" class="btn btn-danger">Cancel</a>
                 </form>
             </div>
