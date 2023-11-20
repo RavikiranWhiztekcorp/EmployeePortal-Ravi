@@ -31,11 +31,11 @@
 <partial name="_NotificationSuccess" />
 
 
-<div class="container">
+<div class="container my-3">
     <div class="row">
-        <div class="ml-offset col-lg-5 col-md-6 offeset-lg-4 offset-md-1">
-            <div class="panel border bg-white">
-                <div class="panel-heading">
+        <div class="ml-offset col-lg-5 col-md-6 offeset-lg-4 offset-md-3">
+            <div class="panel border bg-white py-2">
+                <div class="panel-heading text-center">
                     <h2 class="pt-3 font-weight-bold login-title">@ViewData["Title"]</h2>
                 </div>
                 <form asp-action="Register" method="post" class="login-form">
@@ -80,7 +80,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="registerbtn">
+                    <div class="text-center py-2">
                         <button type="submit" class="btn btn-primary register-button">Register</button>
                     </div>
                     <div class="text-center py-1 text-muted">Don't have an Account?<a asp-area="" asp-controller="Account" asp-action="Login">Already have an account?</a></div>
